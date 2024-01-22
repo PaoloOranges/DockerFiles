@@ -6,7 +6,31 @@
         {
             "label": "Build NUT",
             "type": "shell",
-            "command": "docker buildx build --rm --platform linux/arm/v7,linux/amd64 -t paolooranges/nut-upsd:1.0 -t paolooranges/nut-upsd:latest --push --file ./NUT/Dockerfile ./NUT"
+            "command": "docker",            
+            "args": [
+                "buildx",
+                "build",
+                "--rm",
+                "--platform",
+                "linux/arm/v7,linux/amd64",
+                "-t",
+                "paolooranges/nut-upsd:${input:nutVersion}",
+                "-t",
+                "paolooranges/nut-upsd:latest",
+                "--push",
+                "."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/NUT"
+              }
         }
+    ],
+    "inputs": [
+        {
+            "id": "nutVersion",
+            "description": "NUT Image Verson:",
+            "default": "1.0",
+            "type": "promptString"
+        },
     ]
 }
